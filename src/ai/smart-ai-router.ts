@@ -52,18 +52,19 @@ export class SmartAIRouter {
 
   private logAvailability(): void {
     console.log('\n🤖 AI Router Initialized:');
-    console.log(`   OpenAI/Copilot (Primary): ${this.openaiAvailable ? '✅ Available (GPT-4)' : '❌ Not configured'}`);
-    console.log(`   Groq (Fallback):          ${this.groqAvailable ? '✅ Available (Llama 3.3)' : '❌ Not configured'}`);
-    console.log(`   Anthropic (Reasoning):    ${this.anthropicAvailable ? '✅ Available (Claude)' : '❌ Not configured'}`);
+    console.log(`   Priority 1 - GitHub Copilot: ${this.openaiAvailable ? '✅ Available (GPT-4)' : '❌ Not configured'}`);
+    console.log(`   Priority 2 - Groq (Free):    ${this.groqAvailable ? '✅ Available (Llama 3.3)' : '❌ Not configured'}`);
+    console.log(`   Priority 3 - OpenAI:         ${this.openaiAvailable ? '✅ Available' : '❌ Not configured'}`);
+    console.log(`   Priority 4 - Anthropic:      ${this.anthropicAvailable ? '✅ Available (Claude)' : '❌ Not configured'}`);
     console.log('');
   }
 
   /**
    * Automatically routes requests to the best available AI
-   * Priority: OpenAI/Copilot (primary), Groq (fallback), Anthropic (heavy reasoning)
+   * Priority: GitHub Copilot/OpenAI (1st) → Groq Free (2nd) → Anthropic (3rd for heavy only)
    */
   async think(prompt: string, complexity: TaskComplexity = 'medium'): Promise<AIResponse> {
-    // Light tasks - Use OpenAI (fast, included in monthly), fallback to Groq (free)
+    // Light tasks - Try: GitHub Copilot → Groq (free) → Anthropic
     if (complexity === 'light') {
       if (this.openaiAvailable) {
         return this.thinkWithOpenAI(prompt, 'gpt-4o-mini');
@@ -71,9 +72,12 @@ export class SmartAIRouter {
       if (this.groqAvailable) {
         return this.thinkWithGroq(prompt, 'llama-3.3-70b-versatile');
       }
+      if (this.anthropicAvailable) {
+        return this.thinkWithAnthropic(prompt, 'claude-sonnet-4-20250514');
+      }
     }
 
-    // Medium tasks - Use OpenAI GPT-4 (monthly account), fallback to Groq
+    // Medium tasks - Try: GitHub Copilot → Groq (free) → Anthropic
     if (complexity === 'medium') {
       if (this.openaiAvailable) {
         return this.thinkWithOpenAI(prompt, 'gpt-4o');
@@ -86,17 +90,20 @@ export class SmartAIRouter {
       }
     }
 
-    // Heavy tasks - Use Anthropic Claude (best reasoning), fallback to OpenAI
+    // Heavy tasks - Try: GitHub Copilot → Groq → Anthropic
     if (complexity === 'heavy') {
-      if (this.anthropicAvailable) {
-        return this.thinkWithAnthropic(prompt, 'claude-sonnet-4-20250514');
-      }
       if (this.openaiAvailable) {
         return this.thinkWithOpenAI(prompt, 'gpt-4o');
       }
+      if (this.groqAvailable) {
+        return this.thinkWithGroq(prompt, 'llama-3.3-70b-versatile');
+      }
+      if (this.anthropicAvailable) {
+        return this.thinkWithAnthropic(prompt, 'claude-sonnet-4-20250514');
+      }
     }
 
-    // Final fallback logic
+    // Final fallback logic (same priority)
     if (this.openaiAvailable) {
       return this.thinkWithOpenAI(prompt, 'gpt-4o');
     }
