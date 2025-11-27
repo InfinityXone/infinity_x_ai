@@ -149,6 +149,7 @@ Return validation issues as JSON array.`;
   }
 }
 
+// Export interfaces
 export interface ValidationResult {
   filePath: string;
   syntaxValid: boolean;

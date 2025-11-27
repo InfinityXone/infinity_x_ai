@@ -144,6 +144,7 @@ Return JSON format:
   }
 }
 
+// Export interfaces
 export interface AnalysisResult {
   quality_score: number;
   issues: Array<{
