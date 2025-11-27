@@ -12,7 +12,12 @@
                     "start":  "node dist/index.js",
                     "dev":  "ts-node --esm src/index.ts",
                     "autonomous":  "ts-node --esm src/infinity/autonomous-agent.ts",
-                    "build-real":  "ts-node --esm src/infinity/real-autonomous-builder.ts"
+                    "build-real":  "ts-node --esm src/infinity/real-autonomous-builder.ts",
+                    "infinity-evolve":  "ts-node --esm src/infinity/orchestrator.ts",
+                    "analyze":  "ts-node --esm -e \"import { AutoAnalyzer } from \u0027./src/infinity/auto-analyzer.ts\u0027; const a = new AutoAnalyzer(); a.analyzeProject(process.cwd());\"",
+                    "validate":  "ts-node --esm -e \"import { AutoValidator } from \u0027./src/infinity/auto-validator.ts\u0027; const v = new AutoValidator(); v.validateProject();\"",
+                    "auto-fix":  "ts-node --esm -e \"import { AutoFixer } from \u0027./src/infinity/auto-fixer.ts\u0027; const f = new AutoFixer(); f.autoFixProject();\"",
+                    "enhance":  "ts-node --esm -e \"import { AutoEnhancer } from \u0027./src/infinity/auto-enhancer.ts\u0027; const e = new AutoEnhancer(); e.enhanceProject(\u0027all\u0027);\""
                 },
     "dependencies":  {
                          "@anthropic-ai/sdk":  "^0.71.0",
