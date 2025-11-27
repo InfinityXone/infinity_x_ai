@@ -23,7 +23,12 @@
                     "infinity-parallel":  "ts-node --esm src/parallel/parallel-orchestrator.ts",
                     "infinity-loop":  "ts-node --esm src/infinity-loop/infinity-loop-cli.ts",
                     "infinity-loop-10":  "ts-node --esm src/infinity-loop/infinity-loop-cli.ts --iterations 10",
-                    "infinity-loop-50":  "ts-node --esm src/infinity-loop/infinity-loop-cli.ts --iterations 50"
+                    "infinity-loop-50":  "ts-node --esm src/infinity-loop/infinity-loop-cli.ts --iterations 50",
+                    "ingest":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts",
+                    "ingest-ai":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --domain=ai --pages=20",
+                    "ingest-business":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --domain=business --pages=20",
+                    "ingest-finance":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --domain=finance --pages=20",
+                    "ingest-full":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --pages=15"
                 },
     "dependencies":  {
                          "@anthropic-ai/sdk":  "^0.71.0",
