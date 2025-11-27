@@ -1,6 +1,8 @@
-import { ComprehensiveStrategy } from './strategist.ts';
 import fs from 'fs/promises';
 import path from 'path';
+
+// Type definition (avoid ESM import issues)
+type ComprehensiveStrategy = any;
 
 /**
  * Enterprise Document Generator
