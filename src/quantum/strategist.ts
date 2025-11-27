@@ -1,6 +1,8 @@
 import { MultiAIOrchestrator } from './multi-ai-orchestrator.ts';
 import { QuantumAnalyzer } from './quantum-analyzer.ts';
-import { AnalyzedIdea } from './idea-generator.ts';
+
+// Type definition (avoid ESM import issues)
+type AnalyzedIdea = any;
 
 /**
  * Quantum Strategist
