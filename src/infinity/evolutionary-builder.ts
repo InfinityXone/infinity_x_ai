@@ -23,7 +23,7 @@ export class EvolutionaryBuilder {
   private taxonomy: InfinityTaxonomy;
   private generator: RealFileGenerator;
   private generation: number;
-  private isEvol ving: boolean;
+  private isEvolving: boolean;
 
   constructor() {
     this.analyzer = new AutoAnalyzer();
