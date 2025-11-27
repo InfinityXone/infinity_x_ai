@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { SmartAIRouter } from '../../ai/smart-ai-router.ts';
-import { authenticateToken } from './auth.ts';
+import { authenticateToken, authenticateApiKey } from './auth.ts';
 import { z } from 'zod';
 
 const router = Router();
@@ -13,8 +13,22 @@ const chatSchema = z.object({
   context: z.string().optional()
 });
 
-// POST /api/ai/chat (protected)
-router.post('/chat', authenticateToken, async (req, res) => {
+// Middleware that accepts EITHER JWT token OR API key
+function authenticateEither(req: any, res: any, next: any) {
+  const token = req.headers.authorization?.replace('Bearer ', '');
+  const apiKey = req.headers['x-api-key'];
+
+  if (apiKey) {
+    return authenticateApiKey(req, res, next);
+  } else if (token) {
+    return authenticateToken(req, res, next);
+  } else {
+    return res.status(401).json({ error: 'No authentication provided' });
+  }
+}
+
+// POST /api/ai/chat (protected with JWT OR API key for Hostinger)
+router.post('/chat', authenticateEither, async (req, res) => {
   try {
     const { message, complexity, context } = chatSchema.parse(req.body);
 

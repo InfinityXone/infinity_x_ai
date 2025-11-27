@@ -7,6 +7,8 @@ import { authRouter } from './routes/auth.ts';
 import { aiRouter } from './routes/ai.ts';
 import { governanceRouter } from './routes/governance.ts';
 import { analyticsRouter } from './routes/analytics.ts';
+import googleWorkspaceRouter from './routes/google-workspace.ts';
+import schedulerRouter from './routes/scheduler.ts';
 
 dotenv.config();
 
@@ -46,6 +48,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/ai', aiRouter);
 app.use('/api/governance', governanceRouter);
 app.use('/api/analytics', analyticsRouter);
+app.use('/api/google', googleWorkspaceRouter);
+app.use('/api/scheduler', schedulerRouter);
 
 // Root endpoint
 app.get('/', (req, res) => {
@@ -57,7 +61,9 @@ app.get('/', (req, res) => {
       auth: '/api/auth/*',
       ai: '/api/ai/*',
       governance: '/api/governance/*',
-      analytics: '/api/analytics/*'
+      analytics: '/api/analytics/*',
+      google: '/api/google/*',
+      scheduler: '/api/scheduler/*'
     },
     docs: '/api/docs'
   });
@@ -68,7 +74,7 @@ app.use((req, res) => {
   res.status(404).json({
     error: 'Not Found',
     message: `Cannot ${req.method} ${req.path}`,
-    availableEndpoints: ['/health', '/api/auth', '/api/ai', '/api/governance', '/api/analytics']
+    availableEndpoints: ['/health', '/api/auth', '/api/ai', '/api/governance', '/api/analytics', '/api/google', '/api/scheduler']
   });
 });
 
@@ -93,8 +99,11 @@ app.listen(PORT, () => {
   console.log(`🔐 Auth endpoint: http://localhost:${PORT}/api/auth`);
   console.log(`🤖 AI endpoint: http://localhost:${PORT}/api/ai`);
   console.log(`⚖️  Governance endpoint: http://localhost:${PORT}/api/governance`);
-  console.log(`📊 Analytics endpoint: http://localhost:${PORT}/api/analytics\n`);
-  console.log(`🌐 CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:5173'}\n`);
+  console.log(`📊 Analytics endpoint: http://localhost:${PORT}/api/analytics`);
+  console.log(`📧 Google Workspace: http://localhost:${PORT}/api/google`);
+  console.log(`📅 Autonomous Scheduler: http://localhost:${PORT}/api/scheduler\n`);
+  console.log(`🌐 CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
+  console.log(`📧 Google Workspace Email: ${process.env.GOOGLE_WORKSPACE_EMAIL || 'Not configured'}\n`);
 });
 
 export default app;

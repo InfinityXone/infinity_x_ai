@@ -244,4 +244,22 @@ export function authenticateToken(req: any, res: any, next: any) {
   }
 }
 
+// Middleware for API key authentication (for Hostinger integration)
+export function authenticateApiKey(req: any, res: any, next: any) {
+  const apiKey = req.headers['x-api-key'];
+  
+  if (!apiKey) {
+    return res.status(401).json({ error: 'No API key provided' });
+  }
+
+  // Validate API key against environment variable
+  const validApiKey = process.env.HOSTINGER_API_KEY;
+  
+  if (apiKey !== validApiKey) {
+    return res.status(401).json({ error: 'Invalid API key' });
+  }
+
+  next();
+}
+
 export { router as authRouter };
