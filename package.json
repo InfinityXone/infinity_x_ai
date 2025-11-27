@@ -19,7 +19,8 @@
                     "auto-fix":  "ts-node --esm -e \"import { AutoFixer } from \u0027./src/infinity/auto-fixer.ts\u0027; const f = new AutoFixer(); f.autoFixProject();\"",
                     "enhance":  "ts-node --esm -e \"import { AutoEnhancer } from \u0027./src/infinity/auto-enhancer.ts\u0027; const e = new AutoEnhancer(); e.enhanceProject(\u0027all\u0027);\"",
                     "quantum-mind":  "ts-node --esm src/quantum/quantum-cli.ts",
-                    "quantum-implement":  "ts-node --esm src/quantum/quantum-cli.ts --implement"
+                    "quantum-implement":  "ts-node --esm src/quantum/quantum-cli.ts --implement",
+                    "infinity-parallel":  "ts-node --esm src/parallel/parallel-orchestrator.ts"
                 },
     "dependencies":  {
                          "@anthropic-ai/sdk":  "^0.71.0",
