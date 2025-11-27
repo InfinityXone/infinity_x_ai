@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Send, Users, Circle } from 'lucide-react';
 
 /**
- * Interface for a chat message
+ * Message interface for chat messages
  */
 interface Message {
   id: string;
@@ -14,21 +14,22 @@ interface Message {
 }
 
 /**
- * Interface for a user in the chat
+ * User interface for chat participants
  */
 interface User {
   id: string;
   username: string;
-  status: 'online' | 'away' | 'offline';
+  isOnline: boolean;
   lastSeen?: Date;
 }
 
 /**
- * Interface for typing indicator
+ * Typing indicator interface
  */
 interface TypingUser {
   userId: string;
   username: string;
+  timestamp: Date;
 }
 
 /**
@@ -37,20 +38,20 @@ interface TypingUser {
 interface ChatInterfaceProps {
   /** Current user information */
   currentUser: User;
-  /** List of messages in the chat */
-  messages?: Message[];
-  /** List of online users */
-  onlineUsers?: User[];
+  /** List of all chat participants */
+  users: User[];
+  /** Chat messages history */
+  messages: Message[];
+  /** Callback when a new message is sent */
+  onSendMessage: (content: string) => void;
+  /** Callback when user starts/stops typing */
+  onTypingChange: (isTyping: boolean) => void;
   /** List of users currently typing */
-  typingUsers?: TypingUser[];
-  /** Callback fired when a message is sent */
-  onSendMessage?: (content: string) => void;
-  /** Callback fired when user starts/stops typing */
-  onTypingChange?: (isTyping: boolean) => void;
-  /** Maximum height of the chat container */
-  maxHeight?: string;
-  /** Whether to show user presence indicators */
-  showPresence?: boolean;
+  typingUsers: TypingUser[];
+  /** Optional chat room title */
+  roomTitle?: string;
+  /** Maximum message length */
+  maxMessageLength?: number;
 }
 
 /**
@@ -58,138 +59,118 @@ interface ChatInterfaceProps {
  */
 const ChatInterface: React.FC<ChatInterfaceProps> = ({
   currentUser,
-  messages = [],
-  onlineUsers = [],
-  typingUsers = [],
+  users,
+  messages,
   onSendMessage,
   onTypingChange,
-  maxHeight = '500px',
-  showPresence = true,
+  typingUsers,
+  roomTitle = 'Chat Room',
+  maxMessageLength = 500
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [messageInput, setMessageInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [showUserList, setShowUserList] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout>();
   const inputRef = useRef<HTMLInputElement>(null);
 
   /**
-   * Scroll to the bottom of the messages container
+   * Scroll to bottom of messages
    */
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
   /**
-   * Handle input change and typing indicators
+   * Handle typing indicator logic
    */
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
-
-    if (!isTyping && value.trim()) {
-      setIsTyping(true);
-      onTypingChange?.(true);
+  const handleTypingChange = useCallback((typing: boolean) => {
+    if (typing !== isTyping) {
+      setIsTyping(typing);
+      onTypingChange(typing);
     }
-
-    // Clear existing timeout
-    if (typingTimeoutRef.current) {
-      clearTimeout(typingTimeoutRef.current);
-    }
-
-    // Set new timeout to stop typing indicator
-    typingTimeoutRef.current = setTimeout(() => {
-      setIsTyping(false);
-      onTypingChange?.(false);
-    }, 1000);
   }, [isTyping, onTypingChange]);
+
+  /**
+   * Handle input change with typing indicators
+   */
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    if (value.length <= maxMessageLength) {
+      setMessageInput(value);
+      
+      if (!isTyping && value.trim()) {
+        handleTypingChange(true);
+      }
+      
+      // Clear existing timeout
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+      
+      // Set timeout to stop typing indicator
+      if (value.trim()) {
+        typingTimeoutRef.current = setTimeout(() => {
+          handleTypingChange(false);
+        }, 1000);
+      } else {
+        handleTypingChange(false);
+      }
+    }
+  };
 
   /**
    * Handle message submission
    */
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmedMessage = messageInput.trim();
     
-    const trimmedValue = inputValue.trim();
-    if (!trimmedValue) return;
-
-    onSendMessage?.(trimmedValue);
-    setInputValue('');
-    
-    // Clear typing state
-    setIsTyping(false);
-    onTypingChange?.(false);
-    
-    if (typingTimeoutRef.current) {
-      clearTimeout(typingTimeoutRef.current);
+    if (trimmedMessage && trimmedMessage.length <= maxMessageLength) {
+      onSendMessage(trimmedMessage);
+      setMessageInput('');
+      handleTypingChange(false);
+      
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
     }
-  }, [inputValue, onSendMessage, onTypingChange]);
+  };
 
   /**
    * Handle key press events
    */
-  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e as any);
+      handleSubmit(e);
     }
-  }, [handleSubmit]);
+  };
 
   /**
    * Format timestamp for display
    */
-  const formatTimestamp = useCallback((date: Date): string => {
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
+  const formatTime = (timestamp: Date) => {
+    return new Intl.DateTimeFormat('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    }).format(timestamp);
+  };
 
-    if (minutes < 1) return 'now';
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    if (days < 7) return `${days}d ago`;
+  /**
+   * Get typing indicator text
+   */
+  const getTypingText = () => {
+    const filteredTyping = typingUsers.filter(user => user.userId !== currentUser.id);
     
-    return date.toLocaleDateString();
-  }, []);
+    if (filteredTyping.length === 0) return '';
+    if (filteredTyping.length === 1) return `${filteredTyping[0].username} is typing...`;
+    if (filteredTyping.length === 2) return `${filteredTyping[0].username} and ${filteredTyping[1].username} are typing...`;
+    return `${filteredTyping[0].username} and ${filteredTyping.length - 1} others are typing...`;
+  };
 
-  /**
-   * Get status color for user presence
-   */
-  const getStatusColor = useCallback((status: User['status']): string => {
-    switch (status) {
-      case 'online': return 'text-green-500';
-      case 'away': return 'text-yellow-500';
-      case 'offline': return 'text-gray-400';
-      default: return 'text-gray-400';
-    }
-  }, []);
-
-  /**
-   * Render typing indicator
-   */
-  const renderTypingIndicator = useCallback(() => {
-    if (typingUsers.length === 0) return null;
-
-    const typingText = typingUsers.length === 1 
-      ? `${typingUsers[0].username} is typing...`
-      : typingUsers.length === 2
-      ? `${typingUsers[0].username} and ${typingUsers[1].username} are typing...`
-      : `${typingUsers.length} people are typing...`;
-
-    return (
-      <div className="px-4 py-2 text-sm text-gray-500 italic flex items-center space-x-1">
-        <div className="flex space-x-1">
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-        </div>
-        <span>{typingText}</span>
-      </div>
-    );
-  }, [typingUsers]);
-
-  // Auto-scroll to bottom when new messages arrive
+  // Scroll to bottom when new messages arrive
   useEffect(() => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
@@ -203,129 +184,145 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     };
   }, []);
 
-  return (
-    <div className="flex flex-col bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
-        <div className="flex items-center space-x-2">
-          <h3 className="text-lg font-semibold text-gray-900">Chat</h3>
-          {showPresence && (
-            <span className="text-sm text-gray-500">
-              {onlineUsers.filter(u => u.status === 'online').length} online
-            </span>
-          )}
-        </div>
-        
-        {showPresence && (
-          <button
-            onClick={() => setShowUserList(!showUserList)}
-            className="flex items-center space-x-1 px-3 py-1 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
-          >
-            <Users className="w-4 h-4" />
-            <span>Users</span>
-          </button>
-        )}
-      </div>
+  const onlineUsers = users.filter(user => user.isOnline);
+  const typingText = getTypingText();
 
-      <div className="flex flex-1 min-h-0">
-        {/* Messages Area */}
-        <div className="flex-1 flex flex-col">
-          {/* Messages Container */}
-          <div 
-            className="flex-1 overflow-y-auto p-4 space-y-4"
-            style={{ maxHeight }}
-          >
-            {messages.length === 0 ? (
-              <div className="text-center text-gray-500 py-8">
-                <p>No messages yet. Start the conversation!</p>
-              </div>
-            ) : (
-              messages.map((message) => (
+  return (
+    <div className="flex h-full max-h-screen bg-white border border-gray-200 rounded-lg shadow-sm">
+      {/* Main Chat Area */}
+      <div className="flex flex-col flex-1 min-w-0">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">{roomTitle}</h2>
+            <p className="text-sm text-gray-500">
+              {onlineUsers.length} user{onlineUsers.length !== 1 ? 's' : ''} online
+            </p>
+          </div>
+          <div className="flex items-center space-x-2 text-sm text-gray-500">
+            <Users className="w-4 h-4" />
+            <span>{users.length}</span>
+          </div>
+        </div>
+
+        {/* Messages Container */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={`flex ${
+                message.userId === currentUser.id ? 'justify-end' : 'justify-start'
+              }`}
+            >
+              <div
+                className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                  message.type === 'system'
+                    ? 'bg-gray-100 text-gray-600 text-center text-sm'
+                    : message.userId === currentUser.id
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-gray-900'
+                }`}
+              >
+                {message.type !== 'system' && message.userId !== currentUser.id && (
+                  <div className="text-xs font-medium mb-1 text-gray-600">
+                    {message.username}
+                  </div>
+                )}
+                <div className="break-words">{message.content}</div>
                 <div
-                  key={message.id}
-                  className={`flex ${
-                    message.userId === currentUser.id ? 'justify-end' : 'justify-start'
+                  className={`text-xs mt-1 ${
+                    message.userId === currentUser.id ? 'text-blue-100' : 'text-gray-500'
                   }`}
                 >
-                  <div
-                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                      message.type === 'system'
-                        ? 'bg-gray-100 text-gray-600 text-center text-sm'
-                        : message.userId === currentUser.id
-                        ? 'bg-blue-500 text-white rounded-br-none'
-                        : 'bg-gray-100 text-gray-900 rounded-bl-none'
-                    }`}
-                  >
-                    {message.type === 'text' && message.userId !== currentUser.id && (
-                      <div className="text-xs font-medium mb-1 opacity-75">
-                        {message.username}
-                      </div>
-                    )}
-                    <div className="break-words">{message.content}</div>
-                    <div
-                      className={`text-xs mt-1 ${
-                        message.userId === currentUser.id ? 'text-blue-100' : 'text-gray-500'
-                      }`}
-                    >
-                      {formatTimestamp(message.timestamp)}
-                    </div>
-                  </div>
+                  {formatTime(message.timestamp)}
                 </div>
-              ))
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
+              </div>
+            </div>
+          ))}
+          
           {/* Typing Indicator */}
-          {renderTypingIndicator()}
+          {typingText && (
+            <div className="flex justify-start">
+              <div className="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm">
+                {typingText}
+                <span className="ml-1 animate-pulse">●●●</span>
+              </div>
+            </div>
+          )}
+          
+          <div ref={messagesEndRef} />
+        </div>
 
-          {/* Message Input */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-gray-200">
-            <div className="flex items-center space-x-2">
+        {/* Message Input */}
+        <div className="p-4 border-t border-gray-200 bg-gray-50">
+          <form onSubmit={handleSubmit} className="flex space-x-2">
+            <div className="flex-1">
               <input
                 ref={inputRef}
                 type="text"
-                value={inputValue}
+                value={messageInput}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                placeholder="Type a message..."
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                maxLength={1000}
+                placeholder="Type your message..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                maxLength={maxMessageLength}
               />
-              <button
-                type="submit"
-                disabled={!inputValue.trim()}
-                className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                <Send className="w-5 h-5" />
-              </button>
-            </div>
-          </form>
-        </div>
-
-        {/* User List Sidebar */}
-        {showPresence && showUserList && (
-          <div className="w-64 bg-gray-50 border-l border-gray-200">
-            <div className="p-4">
-              <h4 className="text-sm font-semibold text-gray-900 mb-3">
-                Online Users ({onlineUsers.length})
-              </h4>
-              <div className="space-y-2">
-                {onlineUsers.map((user) => (
-                  <div key={user.id} className="flex items-center space-x-2">
-                    <Circle className={`w-3 h-3 fill-current ${getStatusColor(user.status)}`} />
-                    <span className={`text-sm ${
-                      user.id === currentUser.id ? 'font-medium' : ''
-                    }`}>
-                      {user.username}
-                      {user.id === currentUser.id && ' (You)'}
-                    </span>
-                  </div>
-                ))}
+              <div className="flex justify-between mt-1 text-xs text-gray-500">
+                <span>{isTyping ? 'Typing...' : ''}</span>
+                <span>
+                  {messageInput.length}/{maxMessageLength}
+                </span>
               </div>
             </div>
+            <button
+              type="submit"
+              disabled={!messageInput.trim()}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* User List Sidebar */}
+      <div className="w-64 border-l border-gray-200 bg-gray-50">
+        <div className="p-4">
+          <h3 className="text-sm font-semibold text-gray-900 mb-3">
+            Users ({users.length})
+          </h3>
+          <div className="space-y-2">
+            {users.map((user) => (
+              <div key={user.id} className="flex items-center space-x-2">
+                <div className="relative">
+                  <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                    <span className="text-sm font-medium text-gray-700">
+                      {user.username.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <Circle
+                    className={`w-3 h-3 absolute -bottom-0.5 -right-0.5 rounded-full border-2 border-white ${
+                      user.isOnline ? 'text-green-500 fill-current' : 'text-gray-400 fill-current'
+                    }`}
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {user.username}
+                    {user.id === currentUser.id && ' (You)'}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {user.isOnline
+                      ? 'Online'
+                      : user.lastSeen
+                      ? `Last seen ${formatTime(user.lastSeen)}`
+                      : 'Offline'}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
