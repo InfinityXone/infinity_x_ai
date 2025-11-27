@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+﻿import Anthropic from '@anthropic-ai/sdk';
 import Groq from 'groq-sdk';
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
@@ -63,8 +63,6 @@ export class SmartAIRouter {
    * Priority: OpenAI/Copilot (primary), Groq (fallback), Anthropic (heavy reasoning)
    */
   async think(prompt: string, complexity: TaskComplexity = 'medium'): Promise<AIResponse> {
-    // Route based on complexity and availability
-    
     // Light tasks - Use OpenAI (fast, included in monthly), fallback to Groq (free)
     if (complexity === 'light') {
       if (this.openaiAvailable) {
@@ -78,7 +76,7 @@ export class SmartAIRouter {
     // Medium tasks - Use OpenAI GPT-4 (monthly account), fallback to Groq
     if (complexity === 'medium') {
       if (this.openaiAvailable) {
-        return this.thinkWithOpenAI(prompt, 'gpt-4-turbo-preview');
+        return this.thinkWithOpenAI(prompt, 'gpt-4o');
       }
       if (this.groqAvailable) {
         return this.thinkWithGroq(prompt, 'llama-3.3-70b-versatile');
@@ -94,13 +92,13 @@ export class SmartAIRouter {
         return this.thinkWithAnthropic(prompt, 'claude-sonnet-4-20250514');
       }
       if (this.openaiAvailable) {
-        return this.thinkWithOpenAI(prompt, 'gpt-4-turbo-preview');
+        return this.thinkWithOpenAI(prompt, 'gpt-4o');
       }
     }
 
     // Final fallback logic
     if (this.openaiAvailable) {
-      return this.thinkWithOpenAI(prompt, 'gpt-4-turbo-preview');
+      return this.thinkWithOpenAI(prompt, 'gpt-4o');
     }
     if (this.groqAvailable) {
       return this.thinkWithGroq(prompt, 'llama-3.3-70b-versatile');
@@ -115,31 +113,21 @@ export class SmartAIRouter {
   /**
    * Use OpenAI GPT-4 (GitHub Copilot account - included in monthly subscription)
    */
-  private async thinkWithOpenAI(prompt: string, model: string = 'gpt-4-turbo-preview'): Promise<AIResponse> {
+  private async thinkWithOpenAI(prompt: string, model: string = 'gpt-4o'): Promise<AIResponse> {
     if (!this.openai) {
       throw new Error('OpenAI is not available');
     }
 
     try {
+      console.log(`💡 Using openai (${model})`);
       const response = await this.openai.chat.completions.create({
-    } catch (error: any) {
-      console.error('❌ Groq error:', error.message);
-      
-      // Fallback to OpenAI if available
-      if (this.openaiAvailable) {
-        console.log('🔄 Falling back to OpenAI...');
-        return this.thinkWithOpenAI(prompt, 'gpt-4-turbo-preview');
-      }
-      
-      // Fallback to Anthropic if available
-      if (this.anthropicAvailable) {
-        console.log('🔄 Falling back to Anthropic...');
-        return this.thinkWithAnthropic(prompt, 'claude-sonnet-4-20250514');
-      }
-      
-      throw error;
-    }
-  }   return {
+        model,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7,
+        max_tokens: 4000
+      });
+
+      return {
         text: response.choices[0]?.message?.content || '',
         model: model,
         provider: 'openai',
@@ -192,11 +180,11 @@ export class SmartAIRouter {
         tokensUsed: response.usage?.total_tokens
       };
     } catch (error: any) {
-      console.error('❌ Groq error:', error.message);
+      console.error('Γ¥î Groq error:', error.message);
       
       // Fallback to Anthropic if available
       if (this.anthropicAvailable) {
-        console.log('🔄 Falling back to Anthropic...');
+        console.log('≡ƒöä Falling back to Anthropic...');
         return this.thinkWithAnthropic(prompt, 'claude-sonnet-4-20250514');
       }
       
@@ -226,33 +214,23 @@ export class SmartAIRouter {
 
       const text = response.content[0].type === 'text' ? response.content[0].text : '';
 
+      return {
+        text: text,
+        model: model,
+        provider: 'anthropic',
+        tokensUsed: response.usage.input_tokens + response.usage.output_tokens
+      };
     } catch (error: any) {
-      console.error('❌ Anthropic error:', error.message);
-      
-      // Fallback to OpenAI if available
-      if (this.openaiAvailable) {
-        console.log('🔄 Falling back to OpenAI...');
-        return this.thinkWithOpenAI(prompt, 'gpt-4-turbo-preview');
-      }
+      console.error('Γ¥î Anthropic error:', error.message);
       
       // Fallback to Groq if available
       if (this.groqAvailable) {
-        console.log('🔄 Falling back to Groq...');
+        console.log('≡ƒöä Falling back to Groq...');
         return this.thinkWithGroq(prompt, 'llama-3.3-70b-versatile');
       }
       
       throw error;
     }
-  }
-
-  /**
-   * Force use of OpenAI/Copilot (monthly account)
-   */
-  async useOpenAI(prompt: string): Promise<AIResponse> {
-    if (!this.openaiAvailable) {
-      throw new Error('OpenAI is not available. Set OPENAI_API_KEY in .env');
-    }
-    return this.thinkWithOpenAI(prompt, 'gpt-4-turbo-preview');
   }
 
   /**
@@ -278,9 +256,8 @@ export class SmartAIRouter {
   /**
    * Check which providers are available
    */
-  getAvailability(): { openai: boolean; groq: boolean; anthropic: boolean } {
+  getAvailability(): { groq: boolean; anthropic: boolean } {
     return {
-      openai: this.openaiAvailable,
       groq: this.groqAvailable,
       anthropic: this.anthropicAvailable
     };
@@ -302,11 +279,32 @@ export class SmartAIRouter {
 
     return null;
   }
-}     if (this.groqAvailable) return 'groq';
-      if (this.anthropicAvailable) return 'anthropic';
-    }
 
-    return null;
+  /**
+   * Anthropic API compatibility - wrapper around think()
+   * This allows SmartAIRouter to be used as a drop-in replacement for Anthropic client
+   */
+  get messages() {
+    return {
+      create: async (params: { model: string; max_tokens: number; messages: Array<{ role: string; content: string }>; temperature?: number }) => {
+        const userMessage = params.messages.find(m => m.role === 'user');
+        const prompt = userMessage?.content || '';
+        
+        // Determine complexity based on max_tokens
+        const complexity: TaskComplexity = params.max_tokens > 6000 ? 'heavy' : params.max_tokens > 3000 ? 'medium' : 'light';
+        
+        const response = await this.think(prompt, complexity);
+        
+        // Return in Anthropic format
+        return {
+          content: [{ type: 'text' as const, text: response.text }],
+          model: response.model,
+          role: 'assistant' as const,
+          stop_reason: 'end_turn' as const,
+          usage: { input_tokens: 0, output_tokens: response.tokensUsed || 0 }
+        };
+      }
+    };
   }
 }
 

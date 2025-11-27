@@ -1,0 +1,37 @@
+{
+  "id": "rule-code-quality-001",
+  "name": "Minimum Code Quality Standards",
+  "description": "Enforce minimum code quality scores for all commits",
+  "category": "quality",
+  "priority": "high",
+  "conditions": [
+    {
+      "type": "threshold",
+      "field": "code_quality_score",
+      "operator": "<",
+      "value": 70,
+      "description": "Code quality score below 70"
+    }
+  ],
+  "actions": [
+    {
+      "type": "block",
+      "target": "commit",
+      "parameters": {
+        "message": "Code quality below minimum threshold"
+      },
+      "description": "Block commit until quality improves"
+    },
+    {
+      "type": "notify",
+      "target": "developer",
+      "parameters": {
+        "channel": "email"
+      },
+      "description": "Notify developer of quality issue"
+    }
+  ],
+  "enabled": true,
+  "createdAt": "2025-11-27T21:21:14.441Z",
+  "lastModified": "2025-11-27T21:21:14.441Z"
+}

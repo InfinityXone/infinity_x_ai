@@ -1,0 +1,45 @@
+{
+  "id": "rule-security-001",
+  "name": "No Secrets in Code",
+  "description": "Prevent committing API keys, passwords, or secrets",
+  "category": "security",
+  "priority": "critical",
+  "conditions": [
+    {
+      "type": "pattern",
+      "field": "code_content",
+      "operator": "matches",
+      "value": "(api[_-]?key|password|secret|token)\\s*=\\s*[\"'][^\"']+[\"']",
+      "description": "Detected potential secret in code"
+    }
+  ],
+  "actions": [
+    {
+      "type": "block",
+      "target": "commit",
+      "parameters": {
+        "message": "SECURITY: Potential secret detected"
+      },
+      "description": "Block commit with secrets"
+    },
+    {
+      "type": "alert",
+      "target": "security-team",
+      "parameters": {
+        "severity": "high"
+      },
+      "description": "Alert security team"
+    },
+    {
+      "type": "log",
+      "target": "audit-log",
+      "parameters": {
+        "category": "security-violation"
+      },
+      "description": "Log security violation"
+    }
+  ],
+  "enabled": true,
+  "createdAt": "2025-11-27T21:21:14.441Z",
+  "lastModified": "2025-11-27T21:21:14.441Z"
+}

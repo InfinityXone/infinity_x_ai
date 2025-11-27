@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { SmartAIRouter } from '../ai/smart-ai-router.ts';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
@@ -87,10 +87,7 @@ export class OptimizationEngine {
   private optimizationInterval?: NodeJS.Timeout;
 
   constructor() {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      throw new Error('ANTHROPIC_API_KEY not found in environment');
-    }
-    this.client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    this.client = new SmartAIRouter() as any;
     this.outputDir = './infinity-output/governance/optimization';
     this.targets = new Map();
     this.strategies = new Map();
@@ -161,7 +158,7 @@ Format as JSON array:
   }
 ]`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
       temperature: 0.7,
@@ -306,7 +303,7 @@ Risks Encountered: ${strategy.risks.join(', ')}
 Provide 3-5 key learnings that can be applied to future optimizations.
 Format as JSON array of strings.`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 1500,
       temperature: 0.6,
@@ -355,7 +352,7 @@ Format as JSON array:
   }
 ]`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
       temperature: 0.6,
@@ -417,7 +414,7 @@ For each opportunity, provide:
 
 Format as JSON array.`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
       temperature: 0.6,
@@ -478,7 +475,7 @@ Format as JSON:
   "estimatedImprovement": number
 }`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
       temperature: 0.6,
@@ -590,7 +587,7 @@ Include:
 
 Format as professional report in Markdown.`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 8000,
       temperature: 0.4,
@@ -646,3 +643,4 @@ Format as professional report in Markdown.`;
     return limit ? this.insights.slice(-limit) : this.insights;
   }
 }
+

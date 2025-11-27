@@ -1,0 +1,37 @@
+{
+  "id": "rule-operational-001",
+  "name": "Production Deployment Approval",
+  "description": "Require approval for production deployments",
+  "category": "operational",
+  "priority": "high",
+  "conditions": [
+    {
+      "type": "event",
+      "field": "deployment_target",
+      "operator": "==",
+      "value": "production",
+      "description": "Deploying to production"
+    }
+  ],
+  "actions": [
+    {
+      "type": "block",
+      "target": "deployment",
+      "parameters": {
+        "requireApprovals": 2
+      },
+      "description": "Block until 2 approvals received"
+    },
+    {
+      "type": "notify",
+      "target": "ops-team",
+      "parameters": {
+        "channel": "slack"
+      },
+      "description": "Notify ops team"
+    }
+  ],
+  "enabled": true,
+  "createdAt": "2025-11-27T21:21:14.441Z",
+  "lastModified": "2025-11-27T21:21:14.441Z"
+}

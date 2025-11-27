@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { SmartAIRouter } from '../ai/smart-ai-router.ts';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
@@ -97,10 +97,7 @@ export class GovernanceEngine {
   private auditLogs: AuditLog[];
 
   constructor() {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      throw new Error('ANTHROPIC_API_KEY not found in environment');
-    }
-    this.client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    this.client = new SmartAIRouter() as any;
     this.outputDir = './infinity-output/governance/compliance';
     this.rules = new Map();
     this.policies = new Map();
@@ -483,7 +480,7 @@ Provide response as JSON with this structure:
   "recommendations": ["string"]
 }`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 8000,
       temperature: 0.3,
@@ -597,3 +594,4 @@ Provide response as JSON with this structure:
     return limit ? this.auditLogs.slice(-limit) : this.auditLogs;
   }
 }
+

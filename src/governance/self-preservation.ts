@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { SmartAIRouter } from '../ai/smart-ai-router.ts';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { exec } from 'child_process';
@@ -89,10 +89,7 @@ export class SelfPreservationSystem {
   private monitoringInterval?: NodeJS.Timeout;
 
   constructor() {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      throw new Error('ANTHROPIC_API_KEY not found in environment');
-    }
-    this.client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    this.client = new SmartAIRouter() as any;
     this.outputDir = './infinity-output/governance/preservation';
     this.healthChecks = new Map();
     this.recoveryActions = new Map();
@@ -262,7 +259,7 @@ export class SelfPreservationSystem {
 
       // Calculate response time (simplified)
       const startTime = Date.now();
-      await this.client.messages.create({
+      await this.aiRouter.messages.create({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 10,
         messages: [{ role: 'user', content: 'ping' }]
@@ -586,3 +583,4 @@ export class SelfPreservationSystem {
     return Array.from(this.recoveryActions.values());
   }
 }
+

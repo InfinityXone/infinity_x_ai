@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2025-11-27T21:20:16.839Z",
+    "cpu": 25.83206906767355,
+    "memory": 34.58193053308263,
+    "disk": 0.8492155384243505,
+    "responseTime": 1188,
+    "errorRate": 0,
+    "uptime": 1.7577892,
+    "status": "healthy"
+  },
+  {
+    "timestamp": "2025-11-27T21:20:44.589Z",
+    "cpu": 0,
+    "memory": 0,
+    "disk": 0,
+    "responseTime": 0,
+    "errorRate": 100,
+    "uptime": 0,
+    "status": "down"
+  },
+  {
+    "timestamp": "2025-11-27T21:21:14.564Z",
+    "cpu": 0,
+    "memory": 0,
+    "disk": 0,
+    "responseTime": 0,
+    "errorRate": 100,
+    "uptime": 0,
+    "status": "down"
+  }
+]

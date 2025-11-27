@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { SmartAIRouter } from '../ai/smart-ai-router.ts';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
@@ -80,10 +80,7 @@ export class FinancialManager {
   private readonly FORECAST_DAYS = 30;
 
   constructor() {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      throw new Error('ANTHROPIC_API_KEY not found in environment');
-    }
-    this.client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    this.client = new SmartAIRouter() as any;
     this.outputDir = './infinity-output/governance/financial';
     this.budgets = new Map();
     this.transactions = new Map();
@@ -262,7 +259,7 @@ Provide 3-5 specific, actionable recommendations to:
 
 Format as a JSON array of strings.`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
       temperature: 0.5,
@@ -466,7 +463,7 @@ Include:
 
 Format as a professional financial report in Markdown.`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 8000,
       temperature: 0.3,
@@ -513,3 +510,4 @@ Format as a professional financial report in Markdown.`;
     return budgetId ? all.filter(c => c.budgetId === budgetId) : all;
   }
 }
+

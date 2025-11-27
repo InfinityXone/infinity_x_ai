@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { SmartAIRouter } from '../ai/smart-ai-router.ts';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
@@ -55,16 +55,13 @@ export interface CommunityMetrics {
 }
 
 export class OpenSourceManager {
-  private client: Anthropic;
+  private aiRouter: SmartAIRouter;
   private outputDir: string;
   private projects: Map<string, OpenSourceProject>;
   private proposals: Map<string, ContributionProposal>;
 
   constructor() {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      throw new Error('ANTHROPIC_API_KEY not found in environment');
-    }
-    this.client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    this.aiRouter = new SmartAIRouter();
     this.outputDir = './infinity-output/governance/open-source';
     this.projects = new Map();
     this.proposals = new Map();
@@ -112,7 +109,7 @@ Provide:
 
 Be concise but thorough.`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
       temperature: 0.3,
@@ -144,7 +141,7 @@ Include:
 
 Format as proper Markdown.`;
 
-    const contributingResponse = await this.client.messages.create({
+    const contributingResponse = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
       temperature: 0.5,
@@ -171,7 +168,7 @@ Include:
 
 Format as proper Markdown.`;
 
-    const cocResponse = await this.client.messages.create({
+    const cocResponse = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 3000,
       temperature: 0.3,
@@ -196,7 +193,7 @@ Include:
 
 Format as proper Markdown.`;
 
-    const securityResponse = await this.client.messages.create({
+    const securityResponse = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
       temperature: 0.3,
@@ -253,7 +250,7 @@ Evaluate:
 
 Provide constructive feedback.`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 3000,
       temperature: 0.5,
@@ -383,7 +380,7 @@ Include:
 
 Format as a professional compliance document.`;
 
-    const response = await this.client.messages.create({
+    const response = await this.aiRouter.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
       temperature: 0.3,
@@ -428,3 +425,4 @@ Format as a professional compliance document.`;
     return Array.from(this.proposals.values());
   }
 }
+

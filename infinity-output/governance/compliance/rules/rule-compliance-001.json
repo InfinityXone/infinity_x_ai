@@ -1,0 +1,37 @@
+{
+  "id": "rule-compliance-001",
+  "name": "Data Privacy Compliance",
+  "description": "Ensure PII handling complies with privacy regulations",
+  "category": "compliance",
+  "priority": "critical",
+  "conditions": [
+    {
+      "type": "pattern",
+      "field": "code_content",
+      "operator": "contains",
+      "value": "personal_data",
+      "description": "Code handles personal data"
+    }
+  ],
+  "actions": [
+    {
+      "type": "escalate",
+      "target": "compliance-officer",
+      "parameters": {
+        "reviewRequired": true
+      },
+      "description": "Require compliance review"
+    },
+    {
+      "type": "log",
+      "target": "audit-log",
+      "parameters": {
+        "category": "data-privacy"
+      },
+      "description": "Log data privacy handling"
+    }
+  ],
+  "enabled": true,
+  "createdAt": "2025-11-27T21:21:14.441Z",
+  "lastModified": "2025-11-27T21:21:14.441Z"
+}
