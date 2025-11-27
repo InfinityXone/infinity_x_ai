@@ -1,11 +1,6 @@
 ﻿node_modules/
 dist/
 .env
-.env.local
+.jarvis/
 *.log
 .DS_Store
-PRIVATE_NOTES.txt
-JARVIS_SETUP_PLAN.md
-*.backup
-.vscode/
-.idea/

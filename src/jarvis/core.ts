@@ -1,54 +1,47 @@
-﻿/**
- * JARVIS - Just A Rather Very Intelligent System
- * Core autonomous AI development assistant
- */
+﻿import { JarvisAIEngine } from '../ai/engine.ts';
+import { MemoryManager } from '../ai/memory/memory-manager.ts';
+import { AutonomousAgent } from '../autonomous/agent.ts';
 
-export class JARVIS {
-  private name: string = 'JARVIS';
-  private version: string = '0.1.0';
-  private initialized: boolean = false;
+export class JarvisCore {
+  private aiEngine: JarvisAIEngine;
+  private memory: MemoryManager;
+  private agent: AutonomousAgent;
+  private conversationId: string;
 
   constructor() {
-    console.log('🤖 JARVIS initializing...');
+    console.log('\n🚀 Initializing JARVIS...');
+    this.aiEngine = new JarvisAIEngine();
+    this.memory = new MemoryManager();
+    this.agent = new AutonomousAgent(this.aiEngine, this.memory);
+    this.conversationId = 'session_' + Date.now();
+    console.log('✅ JARVIS Core initialized\n');
+    this.greet();
   }
 
-  async initialize(): Promise<void> {
-    this.initialized = true;
-    console.log(\✅ \ v\ online!\);
+  private async greet() {
+    const greeting = await this.aiEngine.think('Greet the user as JARVIS.');
+    console.log('\n🤖 JARVIS: ' + greeting + '\n');
   }
 
-  async processCommand(command: string): Promise<string> {
-    if (!this.initialized) {
-      throw new Error('JARVIS not initialized');
-    }
-    console.log(\📝 Processing: \\);
-    return 'Command executed successfully';
+  async processInput(input: string) {
+    console.log('\n👤 User: ' + input);
+    this.memory.addToContext(this.conversationId, 'User: ' + input);
+    const context = this.memory.getContext(this.conversationId).join('\n');
+    const response = await this.aiEngine.think(input, context);
+    this.memory.addToContext(this.conversationId, 'JARVIS: ' + response);
+    console.log('\n🤖 JARVIS: ' + response + '\n');
+    return response;
   }
 
-  async generateCode(prompt: string): Promise<string> {
-    console.log(\🔧 Generating code for: \\);
-    // AI code generation logic
-    return '// Generated code';
-  }
-
-  async analyzeCode(code: string): Promise<string> {
-    console.log('🔍 Analyzing code...');
-    return 'Analysis complete';
-  }
-
-  async commitToGitHub(code: string, filePath: string): Promise<void> {
-    console.log(\💾 Committing to: \\);
-    // Uses PowerShell Commit-ToRepo
-  }
-
-  getStatus(): object {
+  enableAutonomousMode() { this.agent.activate(); }
+  disableAutonomousMode() { this.agent.deactivate(); }
+  async assignTask(task: string) { await this.agent.addTask(task); }
+  getStatus() {
     return {
-      name: this.name,
-      version: this.version,
-      initialized: this.initialized,
-      timestamp: new Date().toISOString()
+      conversation: this.conversationId,
+      agent: this.agent.getStatus(),
+      model: this.aiEngine.getCurrentModel(),
     };
   }
+  switchModel(model: string) { this.aiEngine.switchModel(model); }
 }
-
-export default JARVIS;

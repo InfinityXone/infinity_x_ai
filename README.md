@@ -1,37 +1,73 @@
-﻿# JARVIS - Just A Rather Very Intelligent System
+﻿# 🤖 JARVIS - Autonomous AI System
 
-Autonomous AI Development Assistant
+Just A Rather Very Intelligent System - An autonomous AI-powered development assistant.
 
-## Features
+## 🚀 Features
 
-- 🤖 Autonomous code generation
-- 🧠 AI-powered development
-- 💾 Instant GitHub commits
-- 🔧 Self-improving system
-- 🎯 Goal-oriented development
+- 💬 **Interactive Chat**: Natural conversation with AI
+- 🤖 **Autonomous Mode**: AI works independently on tasks
+- 🏗️ **System Builder**: Auto-generate features and code
+- 🧠 **Memory System**: Remembers context and learns
+- 📦 **Auto-Commit**: Automatically commits changes to Git
+- 🔧 **Self-Diagnostic**: Auto-detects and fixes issues
 
-## Setup
+## 🎯 Quick Start
 
 \\\ash
+# Install dependencies
 pnpm install
+
+# Run JARVIS
 pnpm run dev
+
+# Run Autonomous Builder
+pnpm run builder
 \\\
 
-## Usage
+## 💬 Commands
 
-\\\	ypescript
-import JARVIS from './jarvis/core';
+### JARVIS Mode:
+- Chat naturally with AI
+- \/auto\ - Enable autonomous mode
+- \/status\ - Show system status
+- \/task <description>\ - Assign a task
+- \/exit\ - Quit
 
-const jarvis = new JARVIS();
-await jarvis.initialize();
+### Builder Mode:
+- \uild <feature>\ - Build a new feature
+- \nalyze\ - Analyze codebase
+- \commit\ - Auto-commit changes
+- Natural language: Just describe what you want!
+
+## 🔑 Setup
+
+1. Copy \.env.example\ to \.env\
+2. Add your API keys:
+   - \ANTHROPIC_API_KEY\ - Claude API key
+   - \GITHUB_TOKEN\ - GitHub personal access token
+
+## 📚 Project Structure
+
+\\\
+src/
+├── index.ts              # Main JARVIS interface
+├── jarvis/
+│   └── core.ts          # Core JARVIS logic
+├── ai/
+│   ├── engine.ts        # AI engine (Claude)
+│   └── memory/
+│       └── memory-manager.ts  # Memory system
+├── autonomous/
+│   └── agent.ts         # Autonomous agent
+└── builder/
+    ├── autonomous-builder.ts  # System builder
+    └── builder-cli.ts        # Builder CLI
 \\\
 
-## Development
+## 🎉 Phase Complete!
 
-- Built with TypeScript
-- Powered by Claude AI
-- Autonomous operation
+JARVIS is now operational and ready to build autonomously!
 
 ---
 
-Created: 2025-11-27
+**Created by Autonomous AI** 🤖
