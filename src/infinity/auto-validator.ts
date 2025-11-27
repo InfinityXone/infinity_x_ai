@@ -5,6 +5,26 @@ import { promisify } from 'util';
 
 const execAsync = promisify(exec);
 
+// Type definitions - exported first for imports
+export interface ValidationResult {
+  filePath: string;
+  syntaxValid: boolean;
+  typesSafe: boolean;
+  testsPass: boolean;
+  errors: string[];
+  warnings: string[];
+  timestamp: string;
+}
+
+export interface ProjectValidation {
+  totalFiles: number;
+  validFiles: number;
+  totalErrors: number;
+  totalWarnings: number;
+  passRate: number;
+  timestamp: string;
+}
+
 /**
  * Autonomous Validator
  * Validates code correctness, runs tests, checks types
@@ -147,24 +167,4 @@ Return validation issues as JSON array.`;
     
     return files;
   }
-}
-
-// Export interfaces
-export interface ValidationResult {
-  filePath: string;
-  syntaxValid: boolean;
-  typesSafe: boolean;
-  testsPass: boolean;
-  errors: string[];
-  warnings: string[];
-  timestamp: string;
-}
-
-export interface ProjectValidation {
-  totalFiles: number;
-  validFiles: number;
-  totalErrors: number;
-  totalWarnings: number;
-  passRate: number;
-  timestamp: string;
 }

@@ -2,6 +2,32 @@ import { JarvisAIEngine } from '../ai/engine.ts';
 import fs from 'fs/promises';
 import path from 'path';
 
+// Type definitions - exported first for imports
+export interface AnalysisResult {
+  quality_score: number;
+  issues: Array<{
+    type: 'security' | 'performance' | 'bug' | 'style';
+    severity: 'high' | 'medium' | 'low';
+    description: string;
+    line?: number;
+  }>;
+  suggestions: string[];
+  patterns_detected: string[];
+  complexity_score: number;
+  filePath?: string;
+  timestamp?: string;
+}
+
+export interface ProjectAnalysis {
+  totalFiles: number;
+  averageQuality: number;
+  totalIssues: number;
+  highSeverityIssues: number;
+  patterns: string[];
+  recommendations: string[];
+  timestamp: string;
+}
+
 /**
  * Autonomous Code Analyzer
  * Continuously analyzes generated code for quality, patterns, and improvements
@@ -142,30 +168,4 @@ Return JSON format:
   getHistory(filePath: string): AnalysisResult[] {
     return this.analysisHistory.get(filePath) || [];
   }
-}
-
-// Export interfaces
-export interface AnalysisResult {
-  quality_score: number;
-  issues: Array<{
-    type: 'security' | 'performance' | 'bug' | 'style';
-    severity: 'high' | 'medium' | 'low';
-    description: string;
-    line?: number;
-  }>;
-  suggestions: string[];
-  patterns_detected: string[];
-  complexity_score: number;
-  filePath?: string;
-  timestamp?: string;
-}
-
-export interface ProjectAnalysis {
-  totalFiles: number;
-  averageQuality: number;
-  totalIssues: number;
-  highSeverityIssues: number;
-  patterns: string[];
-  recommendations: string[];
-  timestamp: string;
 }
