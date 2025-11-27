@@ -1,5 +1,5 @@
-import { JarvisAIEngine } from '../ai/engine.ts';
-import { KnowledgeIngestor } from './knowledge-ingestor.ts';
+import { JarvisAIEngine } from '../ai/engine.js';
+import { KnowledgeIngestor } from './knowledge-ingestor.js';
 
 /**
  * Infinity Taxonomy System
