@@ -1,6 +1,6 @@
-import { JarvisAIEngine } from '../ai/engine.js';
-import { AutoAnalyzer, AnalysisResult } from './auto-analyzer.js';
-import { AutoValidator, ValidationResult } from './auto-validator.js';
+import { JarvisAIEngine } from '../ai/engine.ts';
+import { AutoAnalyzer, AnalysisResult } from './auto-analyzer.ts';
+import { AutoValidator, ValidationResult } from './auto-validator.ts';
 import fs from 'fs/promises';
 
 /**

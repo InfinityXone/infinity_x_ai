@@ -1,5 +1,5 @@
-import { JarvisAIEngine } from '../ai/engine.js';
-import { MemoryManager } from '../ai/memory/memory-manager.js';
+import { JarvisAIEngine } from '../ai/engine.ts';
+import { MemoryManager } from '../ai/memory/memory-manager.ts';
 import fs from 'fs/promises';
 import path from 'path';
 

@@ -1,10 +1,10 @@
-import { EvolutionaryBuilder } from './evolutionary-builder.js';
-import { AutoAnalyzer } from './auto-analyzer.js';
-import { AutoValidator } from './auto-validator.js';
-import { AutoFixer } from './auto-fixer.js';
-import { AutoEnhancer } from './auto-enhancer.js';
-import { InfinityTaxonomy } from './infinity-taxonomy.js';
-import { KnowledgeIngestor } from './knowledge-ingestor.js';
+import { EvolutionaryBuilder } from './evolutionary-builder.ts';
+import { AutoAnalyzer } from './auto-analyzer.ts';
+import { AutoValidator } from './auto-validator.ts';
+import { AutoFixer } from './auto-fixer.ts';
+import { AutoEnhancer } from './auto-enhancer.ts';
+import { InfinityTaxonomy } from './infinity-taxonomy.ts';
+import { KnowledgeIngestor } from './knowledge-ingestor.ts';
 
 /**
  * INFINITY AUTONOMOUS INTELLIGENCE ORCHESTRATOR

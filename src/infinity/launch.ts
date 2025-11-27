@@ -5,7 +5,7 @@
  * Launches the complete autonomous evolution cycle
  */
 
-import { InfinityOrchestrator } from './orchestrator.js';
+import { InfinityOrchestrator } from './orchestrator.ts';
 
 console.log('🚀 Infinity Evolution System Starting...\n');
 

@@ -1,4 +1,4 @@
-import { JarvisAIEngine } from '../ai/engine.js';
+import { JarvisAIEngine } from '../ai/engine.ts';
 import fs from 'fs/promises';
 
 /**

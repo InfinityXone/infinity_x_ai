@@ -1,10 +1,10 @@
-import { AutoAnalyzer } from './auto-analyzer.js';
-import { AutoValidator } from './auto-validator.js';
-import { AutoFixer } from './auto-fixer.js';
-import { AutoEnhancer } from './auto-enhancer.js';
-import { KnowledgeIngestor } from './knowledge-ingestor.js';
-import { InfinityTaxonomy } from './infinity-taxonomy.js';
-import { RealFileGenerator } from '../builder/real-file-generator.js';
+import { AutoAnalyzer } from './auto-analyzer.ts';
+import { AutoValidator } from './auto-validator.ts';
+import { AutoFixer } from './auto-fixer.ts';
+import { AutoEnhancer } from './auto-enhancer.ts';
+import { KnowledgeIngestor } from './knowledge-ingestor.ts';
+import { InfinityTaxonomy } from './infinity-taxonomy.ts';
+import { RealFileGenerator } from '../builder/real-file-generator.ts';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 
