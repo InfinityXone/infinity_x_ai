@@ -28,7 +28,14 @@
                     "ingest-ai":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --domain=ai --pages=20",
                     "ingest-business":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --domain=business --pages=20",
                     "ingest-finance":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --domain=finance --pages=20",
-                    "ingest-full":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --pages=15"
+                    "ingest-full":  "ts-node --esm src/infinity-ingest/infinity-ingest-cli.ts --pages=15",
+                    "governance":  "ts-node --esm src/governance/infinity-governance-cli.ts",
+                    "governance-persistent":  "ts-node --esm src/governance/infinity-governance-cli.ts --persistent-optimization",
+                    "governance-opensource":  "ts-node --esm src/governance/infinity-governance-cli.ts --mode=open-source",
+                    "governance-financial":  "ts-node --esm src/governance/infinity-governance-cli.ts --mode=financial",
+                    "governance-compliance":  "ts-node --esm src/governance/infinity-governance-cli.ts --mode=compliance",
+                    "governance-preservation":  "ts-node --esm src/governance/infinity-governance-cli.ts --mode=preservation",
+                    "governance-optimization":  "ts-node --esm src/governance/infinity-governance-cli.ts --mode=optimization"
                 },
     "dependencies":  {
                          "@anthropic-ai/sdk":  "^0.71.0",
