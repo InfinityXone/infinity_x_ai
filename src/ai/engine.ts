@@ -21,6 +21,15 @@ export class JarvisAIEngine {
   }
 
   /**
+   * Use OpenAI/Copilot (included in monthly account)
+   */
+  async thinkWithCopilot(prompt: string) {
+    const response = await this.router.useOpenAI(prompt);
+    console.log(`🤖 OpenAI/Copilot: ${response.model}`);
+    return response.text;
+  }
+
+  /**
    * Force Groq usage (free, fast)
    */
   async thinkFast(prompt: string) {
