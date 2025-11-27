@@ -1,147 +1,116 @@
-﻿import { InfinityIntelligence } from '../infinity/core.ts';
+﻿import { InfinityIntelligence } from './core.ts';
 import { GitHubCopilotIntegration } from '../integrations/github/copilot-sync.ts';
-import readline from 'readline';
 
-class InfinityAutonomousAgent {
+class AutonomousInfinityAgent {
   private infinity: InfinityIntelligence;
   private github: GitHubCopilotIntegration;
-  private isAutonomous = false;
-  private buildQueue: Array<{ task: string; priority: number }> = [];
+  private isRunning: boolean = false;
 
   constructor() {
     this.infinity = new InfinityIntelligence();
-    this.github = new GitHubCopilotIntegration();
+    this.github = new GitHubCopilotIntegration(
+      process.env.GITHUB_TOKEN!,
+      process.env.GITHUB_REPO!,
+      process.env.OPENAI_API_KEY!
+    );
   }
 
   async activate() {
-    console.clear();
-    console.log('═══════════════════════════════════════════════════════════════');
-    console.log('   ∞ INFINITY AUTONOMOUS AGENT ∞');
-    console.log('   Self-Building AI System');
+    console.log('\n');
+    console.log(' AUTONOMOUS INFINITY AGENT ACTIVATED');
     console.log('\n');
 
-    await this.infinity.activate();
-    
-    this.isAutonomous = true;
-    console.log('\n AUTONOMOUS MODE: ACTIVE');
-    console.log('🤖 I will now build the complete system autonomously...\n');
+    this.isRunning = true;
 
-    // Auto-sync with GitHub
-    await this.github.syncWithRepo();
+    try {
+      // Step 1: Sync with GitHub
+      console.log(' Step 1/4: Syncing with GitHub repository...\n');
+      await this.github.syncWithRepo();
+      console.log(' GitHub sync complete\n');
 
-    // Start autonomous build cycle
-    this.startAutonomousCycle();
+      // Step 2: Activate Infinity Intelligence
+      console.log(' Step 2/4: Activating multi-AI orchestration...\n');
+      await this.infinity.activate();
+      console.log(' Infinity Intelligence activated\n');
+
+      // Step 3: Build Manus.im Clone Autonomously
+      console.log('  Step 3/4: Building Manus.im clone autonomously...\n');
+      console.log('   This will build 8 features sequentially:\n');
+      console.log('   1. Chat Interface');
+      console.log('   2. Code Editor');
+      console.log('   3. AI Model Switcher');
+      console.log('   4. Real-time Collaboration');
+      console.log('   5. Project Dashboard');
+      console.log('   6. Voice Input/Output');
+      console.log('   7. Auto-deployment Pipeline');
+      console.log('   8. Analytics Dashboard\n');
+
+      await this.infinity.cloneManusIM();
+      console.log(' Manus.im clone complete\n');
+
+      // Step 4: Continuous Build Loop
+      console.log(' Step 4/4: Entering continuous improvement mode...\n');
+      await this.continuousBuildLoop();
+
+    } catch (error) {
+      console.error(' Error in autonomous mode:', error);
+      this.isRunning = false;
+    }
   }
 
-  private async startAutonomousCycle() {
-    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('🏗️  AUTONOMOUS BUILD CYCLE STARTED');
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
-
-    const buildTasks = [
-      { task: 'Complete Manus.im clone interface', priority: 1 },
-      { task: 'Real-time WebSocket chat system', priority: 2 },
-      { task: 'Code editor with syntax highlighting', priority: 3 },
-      { task: 'Multi-AI model switcher', priority: 4 },
-      { task: 'Project management dashboard', priority: 5 },
-      { task: 'Voice input/output system', priority: 6 },
-      { task: 'Auto-deploy pipeline', priority: 7 },
+  private async continuousBuildLoop() {
+    const features = [
+      'Advanced AI conversation memory',
+      'Context-aware code suggestions',
+      'Automated testing framework',
+      'Performance monitoring dashboard',
+      'Multi-language support',
+      'Plugin system architecture',
+      'Advanced security features',
+      'API rate limiting and caching'
     ];
 
-    for (const { task, priority } of buildTasks) {
-      if (!this.isAutonomous) break;
+    let iteration = 1;
 
-      console.log(\\n[\/\] 🔨 Building: \\);
-      console.log('━'.repeat(60));
-      
-      try {
-        await this.infinity.buildFullStackFeature(task);
-        
-        // Auto-commit after each feature
-        await this.github.autoCommitAndPush(\ Auto-built: \\);
-        
-        console.log(\ [\/\] Complete: \\n\);
-        
-        // Brief pause between builds
-        await this.sleep(2000);
-        
-      } catch (error: any) {
-        console.error(\❌ Failed to build: \\, error.message);
+    while (this.isRunning) {
+      console.log(`\n`);
+      console.log(` CONTINUOUS BUILD CYCLE ${iteration}`);
+      console.log(`\n`);
+
+      for (const feature of features) {
+        console.log(`\n[${iteration}]  Building: ${feature}`);
+        console.log(''.repeat(60));
+
+        try {
+          // Use Infinity Intelligence to build the feature
+          const result = await this.infinity.buildFullStackFeature(feature);
+
+          console.log(` Feature complete: ${feature}`);
+          console.log(`   Frontend: ${result.frontend ? 'Created' : 'Skipped'}`);
+          console.log(`   Backend: ${result.backend ? 'Created' : 'Skipped'}`);
+          console.log(`   Tests: ${result.tests ? 'Created' : 'Skipped'}`);
+
+          // Auto-commit to GitHub
+          console.log('\n Committing to GitHub...');
+          await this.github.autoCommitAndPush(
+            `feat: Autonomous build - ${feature}`,
+            `Automatically generated by Infinity Agent\n\nIteration: ${iteration}\nFeature: ${feature}\nTimestamp: ${new Date().toISOString()}`
+          );
+          console.log(' Committed and pushed to GitHub\n');
+
+          // Wait before next feature
+          await this.sleep(2000);
+
+        } catch (error) {
+          console.error(`  Error building ${feature}:`, error);
+          console.log(' Continuing to next feature...\n');
+        }
       }
+
+      iteration++;
+      console.log(`\n Cycle ${iteration - 1} complete. Starting next cycle...\n`);
+      await this.sleep(5000);
     }
-
-    console.log('\n━━━━━━━━━━━━━━');
-    console.log('🎉 AUTONOMOUS BUILD CYCLE COMPLETE!');
-    console.log('━━━━━━━━━\n');
-    
-    console.log('✨ System is now fully operational!');
-    console.log(' Visit http://localhost:5173 to see your creation\n');
-
-    this.startInteractiveMode();
-  }
-
-  private startInteractiveMode() {
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log(' INTERACTIVE MODE');
-    console.log('\n');
-    console.log('Commands:');
-    console.log('  • Type anything to build it');
-    console.log('  • "clone [url]" - Clone another site');
-    console.log('  • "optimize" - Optimize codebase');
-    console.log('  • "deploy" - Deploy to cloud');
-    console.log('   "status" - System status');
-    console.log('   "exit" - Exit agent\n');
-
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-      prompt: '∞ > ',
-    });
-
-    rl.prompt();
-
-    rl.on('line', async (input: string) => {
-      const cmd = input.trim();
-
-      if (!cmd) {
-        rl.prompt();
-        return;
-      }
-
-      switch (cmd.toLowerCase()) {
-        case 'exit':
-          console.log('\n Exiting Infinity Agent...\n');
-          process.exit(0);
-          break;
-
-        case 'status':
-          console.log('\n📊 System Status:');
-          console.log('  ✅ Autonomous: Active');
-          console.log('  ✅ GitHub: Synced');
-          console.log('  ✅ AI: Online (Claude + GPT)');
-          console.log('   Build Queue:', this.buildQueue.length);
-          console.log('');
-          break;
-
-        case 'optimize':
-          console.log('\n Optimizing codebase...');
-          // Add optimization logic
-          break;
-
-        default:
-          if (cmd.startsWith('clone ')) {
-            const url = cmd.substring(6);
-            console.log(\\n Cloning \...\);
-            await this.infinity.cloneManusIM();
-          } else {
-            console.log(\\n  Building: \\);
-            await this.infinity.buildFullStackFeature(cmd);
-            await this.github.autoCommitAndPush(\✨ Built: \\);
-          }
-      }
-
-      rl.prompt();
-    });
   }
 
   private sleep(ms: number): Promise<void> {
@@ -149,11 +118,31 @@ class InfinityAutonomousAgent {
   }
 
   stop() {
-    this.isAutonomous = false;
-    console.log('\n  Autonomous mode deactivated\n');
+    console.log('\n Stopping autonomous mode...');
+    this.isRunning = false;
   }
 }
 
-// Auto-start
-const agent = new InfinityAutonomousAgent();
-await agent.activate();
+// Main execution
+const agent = new AutonomousInfinityAgent();
+
+console.log(`
+
+                                                              
+    INFINITY AUTONOMOUS AGENT                               
+   Powered by Claude Sonnet 4 + GPT-4 Turbo + Gemini Pro    
+                                                              
+   MODE: FULLY AUTONOMOUS                                     
+   REPO: InfinityXone/infinity_x_ai                          
+   BRAIN: GitHub Copilot + Multi-AI Orchestration            
+                                                              
+
+`);
+
+// Handle graceful shutdown
+process.on('SIGINT', () => {
+  agent.stop();
+  process.exit(0);
+});
+
+agent.activate().catch(console.error);
