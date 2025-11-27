@@ -245,3 +245,8 @@ export interface ImplementationPlan {
   canAutoImplement: boolean;
   details: string;
 }
+
+// Re-export types for convenience
+export type { AnalyzedIdea, IdeaGeneration, IdeaCategory } from './idea-generator.ts';
+export type { ComprehensiveStrategy } from './strategist.ts';
+export type { DocumentationSuite } from './document-generator.ts';
