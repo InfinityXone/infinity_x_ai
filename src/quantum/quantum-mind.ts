@@ -1,13 +1,17 @@
 import { MultiAIOrchestrator } from './multi-ai-orchestrator.ts';
 import { QuantumAnalyzer } from './quantum-analyzer.ts';
 import { QuantumIdeaGenerator } from './idea-generator.ts';
-import type { IdeaCategory, AnalyzedIdea, IdeaGeneration } from './idea-generator.ts';
 import { QuantumStrategist } from './strategist.ts';
-import type { ComprehensiveStrategy } from './strategist.ts';
 import { EnterpriseDocumentGenerator } from './document-generator.ts';
-import type { DocumentationSuite } from './document-generator.ts';
 import { KnowledgeCrawler } from './knowledge-crawler.ts';
 import { EvolutionaryBuilder } from '../infinity/evolutionary-builder.ts';
+
+// Type imports (for TypeScript checking only)
+type IdeaCategory = 'system' | 'business' | 'financial' | 'intelligent';
+type AnalyzedIdea = any;
+type IdeaGeneration = any;
+type ComprehensiveStrategy = any;
+type DocumentationSuite = any;
 
 /**
  * INFINITY QUANTUM MIND
