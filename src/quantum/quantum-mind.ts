@@ -1,8 +1,8 @@
 import { MultiAIOrchestrator } from './multi-ai-orchestrator.ts';
 import { QuantumAnalyzer } from './quantum-analyzer.ts';
-import { QuantumIdeaGenerator, type IdeaCategory } from './idea-generator.ts';
-import { QuantumStrategist } from './strategist.ts';
-import { EnterpriseDocumentGenerator } from './document-generator.ts';
+import { QuantumIdeaGenerator, type IdeaCategory, type AnalyzedIdea, type IdeaGeneration } from './idea-generator.ts';
+import { QuantumStrategist, type ComprehensiveStrategy } from './strategist.ts';
+import { EnterpriseDocumentGenerator, type DocumentationSuite } from './document-generator.ts';
 import { KnowledgeCrawler } from './knowledge-crawler.ts';
 import { EvolutionaryBuilder } from '../infinity/evolutionary-builder.ts';
 
