@@ -1,4 +1,4 @@
-{
+﻿{
     "name":  "jarvis-ai",
     "version":  "1.0.0",
     "type":  "module",
@@ -51,7 +51,9 @@
                     "infinity-autonomous":  "tsx src/infinity/infinity-autonomous-loop.ts",
                     "infinity-scheduler":  "tsx src/infinity/infinity-scheduler.ts",
                     "infinity-autonomous-fast":  "tsx src/infinity/infinity-autonomous-loop.ts --interval=30 --evolution-threshold=5",
-                    "infinity-configure":  "tsx scripts/configure-infinity-loop.ts"
+                    "infinity-configure":  "tsx scripts/configure-infinity-loop.ts",
+                    "validate-3stage":  "tsx src/infinity/three-stage-validator.ts",
+                    "quantum-process":  "tsx src/quantum/quantum-mind-processor.ts"
                 },
     "dependencies":  {
                          "@anthropic-ai/sdk":  "^0.71.0",
