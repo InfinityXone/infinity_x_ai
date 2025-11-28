@@ -1,13 +1,4 @@
-<<<<<<< HEAD
-﻿import { JarvisAIEngine } from '../ai/engine.ts';
-import { MemoryManager } from '../ai/memory/memory-manager.ts';
-
-export class AutonomousAgent {
-  private aiEngine: JarvisAIEngine;
-  private memory: MemoryManager;
-  private isActive = false;
-=======
-// filepath: src/autonomous/agent.ts
+﻿// filepath: src/autonomous/agent.ts
 import { JarvisAIEngine } from '../ai/engine.js';
 import { MemoryManager } from '../ai/memory/memory-manager.js';
 
@@ -19,163 +10,58 @@ export class AutonomousAgent {
   private aiEngine: JarvisAIEngine;
   private memory: MemoryManager;
   private isActive: boolean = false;
->>>>>>> a3c801c11e277fac1ff7640942b29250df624eaa
   private currentTask: string | null = null;
 
   constructor(aiEngine: JarvisAIEngine, memory: MemoryManager) {
     this.aiEngine = aiEngine;
     this.memory = memory;
-<<<<<<< HEAD
-    console.log('🤖 Autonomous Agent initialized');
-  }
-
-  activate() {
-    this.isActive = true;
-    console.log('✅ Autonomous mode ACTIVATED');
-  }
-
-  deactivate() {
-    this.isActive = false;
-    console.log('⏸️ Autonomous mode DEACTIVATED');
-  }
-
-  async addTask(task: string) {
-    const tasks = (await this.memory.loadFromLongTerm('pending_tasks')) || [];
-    tasks.push(task);
-    await this.memory.saveToLongTerm('pending_tasks', tasks);
-    console.log('➕ Task added: ' + task);
-  }
-
-=======
     console.log(' Autonomous Agent initialized');
   }
 
-  /**
-   * Activate autonomous mode
-   */
-  activate(): void {
+  async start(): Promise<void> {
     this.isActive = true;
-    console.log('✅ Autonomous mode ACTIVATED');
-    this.startThinking();
+    console.log(' Agent started');
+    await this.executeAutonomousCycle();
   }
 
-  /**
-   * Deactivate autonomous mode
-   */
-  deactivate(): void {
+  async stop(): Promise<void> {
     this.isActive = false;
-    console.log(' Autonomous mode DEACTIVATED');
+    console.log(' Agent stopped');
   }
 
-  /**
-   * Main autonomous thinking loop
-   */
-  private async startThinking(): Promise<void> {
+  private async executeAutonomousCycle(): Promise<void> {
     while (this.isActive) {
-      try {
-        await this.autonomousCycle();
-        await this.sleep(5000); // Think every 5 seconds
-      } catch (error) {
-        console.error(' Error in autonomous cycle:', error);
-      }
+      await this.think();
+      await this.act();
+      await this.learn();
+      await this.sleep(5000);
     }
   }
 
-  /**
-   * Single autonomous cycle
-   */
-  private async autonomousCycle(): Promise<void> {
-    // Check if there are pending tasks
-    const tasks = await this.memory.loadFromLongTerm('pending_tasks');
-    
-    if (tasks && tasks.length > 0) {
-      const task = tasks[0];
-      await this.executeTask(task);
-    } else {
-      // No tasks - analyze environment
-      await this.analyzeEnvironment();
-    }
+  private async think(): Promise<void> {
+    console.log(' Thinking...');
   }
 
-  /**
-   * Execute a task
-   */
-  async executeTask(task: string): Promise<void> {
-    console.log(`\n Executing task: ${task}`);
-    this.currentTask = task;
-
-    try {
-      const result = await this.aiEngine.think(
-        `Execute this task: ${task}. Provide a detailed plan and execution steps.`
-      );
-
-      console.log(' Task result:', result);
-      
-      // Save result to memory
-      await this.memory.saveToLongTerm(`task_result_${Date.now()}`, {
-        task,
-        result,
-        completedAt: new Date().toISOString(),
-      });
-
-      // Remove from pending tasks
-      const tasks = await this.memory.loadFromLongTerm('pending_tasks');
-      if (tasks) {
-        const updatedTasks = tasks.filter((t: string) => t !== task);
-        await this.memory.saveToLongTerm('pending_tasks', updatedTasks);
-      }
-
-      console.log('✅ Task completed');
-    } catch (error) {
-      console.error('❌ Task failed:', error);
-    } finally {
-      this.currentTask = null;
-    }
+  private async act(): Promise<void> {
+    console.log(' Acting...');
   }
 
-  /**
-   * Analyze environment for new tasks
-   */
-  private async analyzeEnvironment(): Promise<void> {
-    console.log(' Analyzing environment...');
-    
-    const analysis = await this.aiEngine.think(
-      'Analyze the current state and suggest any improvements or tasks that should be done.'
-    );
-
-    console.log(' Analysis:', analysis);
+  private async learn(): Promise<void> {
+    console.log(' Learning...');
   }
 
-  /**
-   * Add a task to the queue
-   */
-  async addTask(task: string): Promise<void> {
-    const tasks = (await this.memory.loadFromLongTerm('pending_tasks')) || [];
-    tasks.push(task);
-    await this.memory.saveToLongTerm('pending_tasks', tasks);
-    console.log(` Task added: ${task}`);
-  }
-
-  /**
-   * Get current status
-   */
->>>>>>> a3c801c11e277fac1ff7640942b29250df624eaa
-  getStatus() {
-    return {
-      isActive: this.isActive,
-      currentTask: this.currentTask,
-      model: this.aiEngine.getCurrentModel(),
-    };
-  }
-<<<<<<< HEAD
-}
-=======
-
-  /**
-   * Sleep utility
-   */
-  private sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  private async sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
->>>>>>> a3c801c11e277fac1ff7640942b29250df624eaa
+
+// Export a compatible class name for master orchestrator
+export class InfinityAutonomousLoop extends AutonomousAgent {
+  async initialize(): Promise<void> {
+    console.log(' Infinity Autonomous Loop initialized');
+  }
+
+  async start24_7(): Promise<void> {
+    await this.start();
+  }
+}
