@@ -45,8 +45,8 @@
                     "api":  "ts-node --esm src/api/server.ts",
                     "api:dev":  "nodemon --exec ts-node --esm src/api/server.ts",
                     "api-simple":  "tsx src/api/simple-server.ts",
-                    "autonomous-sync":  "node autonomous-sync.js",
-                    "autonomous-build":  "node autonomous-builder.js",
+                    "autonomous-sync":  "node autonomous-sync.cjs",
+                    "autonomous-build":  "node autonomous-builder.cjs",
                     "autonomous-full":  "node autonomous-sync.js"
                 },
     "dependencies":  {
