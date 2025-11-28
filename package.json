@@ -47,7 +47,11 @@
                     "api-simple":  "tsx src/api/simple-server.ts",
                     "autonomous-sync":  "node autonomous-sync.cjs",
                     "autonomous-build":  "node autonomous-builder.cjs",
-                    "autonomous-full":  "node autonomous-sync.js"
+                    "autonomous-full":  "node autonomous-sync.js",
+                    "infinity-autonomous":  "tsx src/infinity/infinity-autonomous-loop.ts",
+                    "infinity-scheduler":  "tsx src/infinity/infinity-scheduler.ts",
+                    "infinity-autonomous-fast":  "tsx src/infinity/infinity-autonomous-loop.ts --interval=30 --evolution-threshold=5",
+                    "infinity-configure":  "tsx scripts/configure-infinity-loop.ts"
                 },
     "dependencies":  {
                          "@anthropic-ai/sdk":  "^0.71.0",
