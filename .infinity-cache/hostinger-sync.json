@@ -578,9 +578,80 @@
       "priority": "normal",
       "timestamp": 1764349052151,
       "synced": false
+    },
+    {
+      "id": "upd-1764349112164-fmklw02im",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 17,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 17,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 25,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 62,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764349112164
+      },
+      "priority": "normal",
+      "timestamp": 1764349112164,
+      "synced": false
+    },
+    {
+      "id": "upd-1764349112167-siwc6yx9d",
+      "type": "status",
+      "payload": {
+        "systemHealth": "healthy",
+        "activeAgents": [
+          "unified-orchestrator"
+        ],
+        "metrics": {
+          "gemini_syncs": 12,
+          "hostinger_syncs": 3,
+          "syncDuration": 3
+        },
+        "alerts": []
+      },
+      "priority": "normal",
+      "timestamp": 1764349112167,
+      "synced": false
     }
   ],
-  "lastSyncTime": 1764349097801,
+  "lastSyncTime": 1764349112867,
   "activeEndpoint": "https://infinityxonesystems.com/api",
   "firebaseConfig": {
     "projectId": "infinity-x-one-systems",

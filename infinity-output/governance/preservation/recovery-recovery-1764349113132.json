@@ -1,0 +1,11 @@
+{
+  "id": "recovery-1764349113132",
+  "type": "custom",
+  "trigger": "",
+  "priority": "critical",
+  "maxRetries": 3,
+  "retryDelay": 60,
+  "status": "success",
+  "executedAt": "2025-11-28T16:58:33.132Z",
+  "result": "Recovery completed successfully"
+}

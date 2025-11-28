@@ -1,12 +1,13 @@
 {
-  "lastSync": 1764349052153,
+  "lastSync": 1764349112170,
   "pendingDirectives": [],
   "metrics": {
-    "gemini_syncs": 10
+    "gemini_syncs": 12,
+    "hostinger_syncs": 3
   },
   "activeAgents": {
     "unified-orchestrator": {
-      "lastSeen": 1764347543200,
+      "lastSeen": 1764349052154,
       "status": "active"
     }
   }
