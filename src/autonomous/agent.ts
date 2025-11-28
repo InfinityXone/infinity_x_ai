@@ -1,6 +1,6 @@
 ﻿// filepath: src/autonomous/agent.ts
-import { JarvisAIEngine } from '../ai/engine.js';
-import { MemoryManager } from '../ai/memory/memory-manager.js';
+import { JarvisAIEngine } from '../ai/engine.ts';
+import { MemoryManager } from '../ai/memory/memory-manager.ts';
 
 /**
  * JARVIS Autonomous Agent
