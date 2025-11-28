@@ -1,0 +1,593 @@
+{
+  "updateQueue": [
+    {
+      "id": "upd-1764347430851-bvqduo2nd",
+      "type": "status",
+      "payload": {
+        "systemHealth": "critical",
+        "activeAgents": [],
+        "metrics": {
+          "syncDuration": 3
+        },
+        "alerts": []
+      },
+      "priority": "critical",
+      "timestamp": 1764347430851,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347430848-sn9e37vsu",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 12,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 2,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764347430847
+      },
+      "priority": "normal",
+      "timestamp": 1764347430848,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347490883-x479k93lz",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 3,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 2,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 12,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 62,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764347490883
+      },
+      "priority": "normal",
+      "timestamp": 1764347490883,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347490887-ei7oyh06l",
+      "type": "status",
+      "payload": {
+        "systemHealth": "degraded",
+        "activeAgents": [
+          "unified-orchestrator"
+        ],
+        "metrics": {
+          "gemini_syncs": 2,
+          "syncDuration": 4
+        },
+        "alerts": []
+      },
+      "priority": "normal",
+      "timestamp": 1764347490887,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347543192-sh902uwcf",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 5,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 4,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 12,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 1,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764347543192
+      },
+      "priority": "normal",
+      "timestamp": 1764347543192,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347543196-24ytet7e1",
+      "type": "status",
+      "payload": {
+        "systemHealth": "degraded",
+        "activeAgents": [
+          "unified-orchestrator"
+        ],
+        "metrics": {
+          "gemini_syncs": 2,
+          "syncDuration": 4
+        },
+        "alerts": []
+      },
+      "priority": "normal",
+      "timestamp": 1764347543196,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347603212-v5gt0tbow",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 7,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 6,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 12,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 61,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764347603212
+      },
+      "priority": "normal",
+      "timestamp": 1764347603212,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347603216-cx9ddduuq",
+      "type": "status",
+      "payload": {
+        "systemHealth": "degraded",
+        "activeAgents": [
+          "unified-orchestrator"
+        ],
+        "metrics": {
+          "gemini_syncs": 4,
+          "syncDuration": 4
+        },
+        "alerts": []
+      },
+      "priority": "normal",
+      "timestamp": 1764347603216,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347663215-icztxddkp",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 9,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 8,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 12,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 121,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764347663215
+      },
+      "priority": "normal",
+      "timestamp": 1764347663215,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347663218-3vttww1n1",
+      "type": "status",
+      "payload": {
+        "systemHealth": "degraded",
+        "activeAgents": [
+          "unified-orchestrator"
+        ],
+        "metrics": {
+          "gemini_syncs": 6,
+          "syncDuration": 3
+        },
+        "alerts": []
+      },
+      "priority": "normal",
+      "timestamp": 1764347663218,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347723226-fr3494at5",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 11,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 10,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 12,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 181,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764347723226
+      },
+      "priority": "normal",
+      "timestamp": 1764347723226,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347723228-84mhe2oz2",
+      "type": "status",
+      "payload": {
+        "systemHealth": "degraded",
+        "activeAgents": [
+          "unified-orchestrator"
+        ],
+        "metrics": {
+          "gemini_syncs": 8,
+          "syncDuration": 2
+        },
+        "alerts": []
+      },
+      "priority": "normal",
+      "timestamp": 1764347723228,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347783228-j0wdlpva9",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 13,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 12,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 12,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 241,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764347783228
+      },
+      "priority": "normal",
+      "timestamp": 1764347783228,
+      "synced": false
+    },
+    {
+      "id": "upd-1764347783232-nlzqcze3t",
+      "type": "status",
+      "payload": {
+        "systemHealth": "degraded",
+        "activeAgents": [
+          "unified-orchestrator"
+        ],
+        "metrics": {
+          "gemini_syncs": 10,
+          "syncDuration": 4
+        },
+        "alerts": []
+      },
+      "priority": "normal",
+      "timestamp": 1764347783232,
+      "synced": false
+    },
+    {
+      "id": "upd-1764349051871-japbts61u",
+      "type": "status",
+      "payload": {
+        "systemHealth": "healthy",
+        "activeAgents": [
+          "gemini",
+          "copilot",
+          "master-orchestrator"
+        ],
+        "metrics": {
+          "uptime": 1.7225928,
+          "memoryUsage": 11.821510314941406
+        },
+        "alerts": []
+      },
+      "priority": "normal",
+      "timestamp": 1764349051871,
+      "synced": false
+    },
+    {
+      "id": "upd-1764349052150-ndycri3sw",
+      "type": "metric",
+      "payload": {
+        "metrics": [
+          {
+            "name": "gemini_commands_pending",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_processed_today",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "gemini_quota_used",
+            "value": 15,
+            "unit": "count"
+          },
+          {
+            "name": "hostinger_queued_updates",
+            "value": 15,
+            "unit": "count"
+          },
+          {
+            "name": "active_agents",
+            "value": 1,
+            "unit": "count"
+          },
+          {
+            "name": "pending_directives",
+            "value": 0,
+            "unit": "count"
+          },
+          {
+            "name": "memory_usage_mb",
+            "value": 12,
+            "unit": "MB"
+          },
+          {
+            "name": "uptime_seconds",
+            "value": 2,
+            "unit": "seconds"
+          }
+        ],
+        "timestamp": 1764349052150
+      },
+      "priority": "normal",
+      "timestamp": 1764349052150,
+      "synced": false
+    },
+    {
+      "id": "upd-1764349052151-tghcj9bni",
+      "type": "status",
+      "payload": {
+        "systemHealth": "degraded",
+        "activeAgents": [
+          "unified-orchestrator"
+        ],
+        "metrics": {
+          "gemini_syncs": 10,
+          "syncDuration": 2
+        },
+        "alerts": [
+          "Agent unified-orchestrator is stale (last seen 1509s ago)"
+        ]
+      },
+      "priority": "normal",
+      "timestamp": 1764349052151,
+      "synced": false
+    }
+  ],
+  "lastSyncTime": 0,
+  "activeEndpoint": "https://infinityxonesystems.com/api",
+  "firebaseConfig": {
+    "projectId": "infinity-x-one-systems",
+    "apiKey": "",
+    "authDomain": "infinity-x-one-systems.firebaseapp.com",
+    "storageBucket": "infinity-x-one-systems.appspot.com",
+    "messagingSenderId": "",
+    "appId": ""
+  }
+}

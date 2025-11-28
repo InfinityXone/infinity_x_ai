@@ -1,0 +1,15 @@
+{
+  "lastSync": 1764347812828,
+  "commands": [],
+  "systemStatus": {
+    "online": false,
+    "lastSync": 0,
+    "pendingCommands": 0,
+    "processedToday": 0,
+    "errorRate": 0,
+    "quotaUsed": 14,
+    "quotaLimit": 50000
+  },
+  "agentLogs": [],
+  "codePatches": []
+}

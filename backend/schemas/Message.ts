@@ -1,88 +1,50 @@
 interface User {
-  id: string;
+  id: number;
   username: string;
   email: string;
-  avatarUrl?: string;
-  status: 'online' | 'offline' | 'away' | 'busy';
   lastSeen: Date;
   createdAt: Date;
   updatedAt: Date;
 }
 
-interface ChatRoom {
-  id: string;
-  name: string;
-  description?: string;
-  type: 'direct' | 'group' | 'public' | 'private';
-  createdBy: string;
+interface Conversation {
+  id: number;
+  title: string;
   createdAt: Date;
   updatedAt: Date;
+  users: User[];
 }
 
 interface Message {
-  id: string;
-  chatRoomId: string;
-  senderId: string;
+  id: number;
+  conversationId: number;
+  senderId: number;
   content: string;
-  type: 'text' | 'image' | 'file' | 'emoji' | 'system';
-  replyToId?: string;
-  editedAt?: Date;
-  deletedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
-}
-
-interface ChatRoomMember {
-  id: string;
-  chatRoomId: string;
-  userId: string;
-  role: 'admin' | 'moderator' | 'member';
-  joinedAt: Date;
-  lastReadMessageId?: string;
-  lastReadAt?: Date;
+  conversation: Conversation;
+  sender: User;
 }
 
 interface TypingIndicator {
-  id: string;
-  chatRoomId: string;
-  userId: string;
+  id: number;
+  conversationId: number;
+  userId: number;
   isTyping: boolean;
-  startedAt: Date;
-  expiresAt: Date;
-}
-
-interface MessageReaction {
-  id: string;
-  messageId: string;
-  userId: string;
-  emoji: string;
   createdAt: Date;
+  updatedAt: Date;
+  conversation: Conversation;
+  user: User;
 }
 
 interface UserPresence {
-  id: string;
-  userId: string;
-  status: 'online' | 'offline' | 'away' | 'busy';
-  lastActivity: Date;
-  socketId?: string;
-  deviceInfo?: string;
+  id: number;
+  userId: number;
+  conversationId: number;
+  isOnline: boolean;
+  lastSeen: Date;
   createdAt: Date;
   updatedAt: Date;
-}
-
-interface MessageAttachment {
-  id: string;
-  messageId: string;
-  fileName: string;
-  fileUrl: string;
-  fileSize: number;
-  mimeType: string;
-  createdAt: Date;
-}
-
-interface MessageRead {
-  id: string;
-  messageId: string;
-  userId: string;
-  readAt: Date;
+  user: User;
+  conversation: Conversation;
 }

@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2025-11-28T16:57:33.053Z",
+    "cpu": 0,
+    "memory": 0,
+    "disk": 0,
+    "responseTime": 0,
+    "errorRate": 100,
+    "uptime": 0,
+    "status": "down"
+  }
+]
