@@ -51,37 +51,37 @@ app.post('/api/clone-manus', async (req, res) => {
 
 // WebSocket for real-time communication
 io.on('connection', (socket) => {
-  console.log('🔌 Client connected:', socket.id);
+  console.log(' Client connected:', socket.id);
 
   socket.on('chat', async (message) => {
-    console.log('💬 Chat message:', message);
+    console.log(' Chat message:', message);
     // Process with AI and emit response
     socket.emit('response', { message: 'AI response here' });
   });
 
   socket.on('build', async (data) => {
-    console.log('🏗️  Build request:', data);
+    console.log('  Build request:', data);
     await infinity.buildFullStackFeature(data.description);
     socket.emit('build-complete', { success: true });
   });
 
   socket.on('disconnect', () => {
-    console.log('🔌 Client disconnected:', socket.id);
+    console.log(' Client disconnected:', socket.id);
   });
 });
 
 // Start server
 httpServer.listen(PORT, async () => {
   console.clear();
-  console.log('═══════════════════════════════════════════════════════════════');
-  console.log('   🌌 INFINITY INTELLIGENCE SYSTEM');
+  console.log('');
+  console.log('    INFINITY INTELLIGENCE SYSTEM');
   console.log('   Backend Server + AI Builder');
-  console.log('═══════════════════════════════════════════════════════════════\n');
-  console.log(\🖥️  Server running on http://localhost:\\);
-  console.log(\�� WebSocket server active\);
-  console.log(\\n🚀 Activating Infinity Intelligence...\n\);
+  console.log('\n');
+  console.log(\  Server running on http://localhost:\\);
+  console.log(\ WebSocket server active\);
+  console.log(\\n Activating Infinity Intelligence...\n\);
   
   await infinity.activate();
   
-  console.log(\\n✨ System ready! Visit http://localhost:5173 for frontend\n\);
+  console.log(\\n System ready! Visit http://localhost:5173 for frontend\n\);
 });

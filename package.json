@@ -43,7 +43,8 @@
         "evolution-docs-ai": "ts-node --esm src/evolution-docs/evolution-doc-cli.ts --mode=ai",
         "evolution-docs-taxonomy": "ts-node --esm src/evolution-docs/evolution-doc-cli.ts --mode=taxonomy",
         "api": "ts-node --esm src/api/server.ts",
-        "api:dev": "nodemon --exec ts-node --esm src/api/server.ts"
+        "api:dev": "nodemon --exec ts-node --esm src/api/server.ts",
+        "api-simple": "tsx src/api/simple-server.ts"
     },
     "dependencies": {
         "@anthropic-ai/sdk": "^0.71.0",
@@ -83,6 +84,7 @@
         "postcss": "^8.5.6",
         "tailwindcss": "^4.1.17",
         "ts-node": "^10.9.2",
+        "tsx": "^4.20.6",
         "typescript": "^5.9.3",
         "vite": "^7.2.4"
     }

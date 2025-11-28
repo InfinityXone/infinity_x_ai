@@ -1,0 +1,59 @@
+═══════════════════════════════════════════════════════════════
+   WHAT TO GIVE TO HOSTINGER - SIMPLE ANSWER
+═══════════════════════════════════════════════════════════════
+
+The Google JSON file you provided is for BACKEND configuration.
+✅ It's already configured in your .env file.
+
+═══════════════════════════════════════════════════════════════
+
+WHAT HOSTINGER NEEDS:
+
+1. API KEY (Copy this exactly):
+   infinity-ai-chat-key-2025-secure-token-change-in-production
+
+2. API URL: 
+   You need to DEPLOY your backend first!
+   Options:
+   - Local testing: http://localhost:3000
+   - Production: Deploy to Railway/Vercel first
+
+═══════════════════════════════════════════════════════════════
+
+EXAMPLE CODE FOR HOSTINGER:
+
+<script>
+const API_URL = 'http://localhost:3000';  // Change after deploy
+const API_KEY = 'infinity-ai-chat-key-2025-secure-token-change-in-production';
+
+async function sendMessage(message) {
+  const response = await fetch(`${API_URL}/api/ai/chat`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': API_KEY
+    },
+    body: JSON.stringify({ message: message })
+  });
+  
+  const data = await response.json();
+  return data.response.text;
+}
+</script>
+
+═══════════════════════════════════════════════════════════════
+
+NEXT STEPS:
+
+1. ⚠️ Your project has TypeScript errors that need fixing first
+2. Deploy backend to Railway or Vercel
+3. Update API_URL in Hostinger code with deployed URL
+4. Test from Hostinger site
+
+═══════════════════════════════════════════════════════════════
+
+IMPORTANT:
+- Google OAuth JSON = Backend config (DONE ✅)
+- Hostinger needs = API Key + URL (Above ☝️)
+
+═══════════════════════════════════════════════════════════════

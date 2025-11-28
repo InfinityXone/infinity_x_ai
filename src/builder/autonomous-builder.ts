@@ -33,7 +33,8 @@ export class AutonomousSystemBuilder {
   }
 
   async buildFeature(description: string): Promise<void> {
-    console.log(\\n🏗️  Building feature: \\);
+    console.log(
+🏗️  Building feature: \\);
     
     try {
       // Step 1: Plan the feature
@@ -76,7 +77,8 @@ export class AutonomousSystemBuilder {
     
     try {
       const srcFiles = await this.getAllFiles('src');
-      console.log(\\n📊 Found \ files\);
+      console.log(
+📊 Found \ files\);
       
       for (const file of srcFiles.slice(0, 5)) {
         const content = await fs.readFile(file, 'utf-8');
@@ -120,7 +122,8 @@ export class AutonomousSystemBuilder {
   }
 
   async createFile(filePath: string, content: string): Promise<void> {
-    console.log(\\n📝 Creating file: \\);
+    console.log(
+📝 Creating file: \\);
     
     try {
       const dir = path.dirname(filePath);

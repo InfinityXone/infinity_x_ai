@@ -95,10 +95,10 @@ function App() {
                 key={i}
                 initial={{ opacity: 0, x: msg.role === 'user' ? 20 : -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className={\lex \\}
+                className={\lex \}
               >
                 <div
-                  className={\max-w-lg px-6 py-4 rounded-2xl \\}
+                  className={\max-w-lg px-6 py-4 rounded-2xl \}
                 >
                   <p className="whitespace-pre-wrap">{msg.content}</p>
                 </div>
