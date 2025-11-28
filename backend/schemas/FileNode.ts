@@ -8,23 +8,31 @@ interface FileNode {
   deletedAt: Date | null;
 }
 
-interface FileNodeRelationships {
+interface FileNodeRelations {
   children: FileNode[];
   parent: FileNode | null;
 }
 
-interface FileNodeWithRelationships extends FileNode {
-  relationships: FileNodeRelationships;
-}
+interface FileNodeWithRelations extends FileNode, FileNodeRelations {}
 
-interface NewFileNode {
+interface FileNodeCreateInput {
   name: string;
   type: 'file' | 'directory';
   parentId: number | null;
 }
 
-interface UpdatedFileNode {
+interface FileNodeUpdateInput {
   id: number;
   name?: string;
+  type?: 'file' | 'directory';
   parentId?: number | null;
+}
+
+interface FileNodeDeleteInput {
+  id: number;
+}
+
+interface FileNodeDragDropInput {
+  id: number;
+  newParentId: number | null;
 }
